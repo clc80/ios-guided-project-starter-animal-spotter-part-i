@@ -12,7 +12,11 @@ class AnimalsTableViewController: UITableViewController {
     
     // MARK: - Properties
     private let apiController = APIController()
-    private var animalNames: [String] = []
+    private var animalNames: [String] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
 
     // MARK: - View Lifecycle
     
@@ -37,10 +41,7 @@ class AnimalsTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "AnimalCell", for: indexPath)
-
-        // Configure the cell...
         cell.textLabel?.text = animalNames[indexPath.row]
-
         return cell
     }
 
@@ -48,6 +49,31 @@ class AnimalsTableViewController: UITableViewController {
     
     @IBAction func getAnimals(_ sender: UIBarButtonItem) {
         // fetch all animals from API
+        apiController.fetchAllAnimalNames { (result) in
+            do {
+                let names = try result.get()
+                DispatchQueue.main.async {
+                    self.animalNames = names
+                }
+            } catch {
+                if let error = error as? NetworkError {
+                    switch error {
+                    case .noAuth:
+                        print("Error: No bearere token exists.")
+                    case .unauthorized:
+                        print("Error: Bearer token invalid.")
+                    case .noData:
+                        print("Error: The response had no data.")
+                    case .decodeFailed:
+                        print("Error: The data could not be decoded.")
+                    case .otherEror(let otherError):
+                        print("Error: \(otherError)")
+                    }
+                } else {
+                    print("Error: \(error)")
+                }
+            }
+        }
     }
     
     // MARK: - Navigation
