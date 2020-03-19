@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3AE8B5782423143C00E61F30 /* Animal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AE8B5772423143C00E61F30 /* Animal.swift */; };
 		3AFB92192420691300C9C5DA /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFB92182420691300C9C5DA /* User.swift */; };
 		3AFB921B2420735900C9C5DA /* Bearer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3AFB921A2420735900C9C5DA /* Bearer.swift */; };
 		CEB8F70C236B8D3600455692 /* AnimalDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEB8F70B236B8D3600455692 /* AnimalDetailViewController.swift */; };
@@ -20,6 +21,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3AE8B5772423143C00E61F30 /* Animal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Animal.swift; sourceTree = "<group>"; };
 		3AFB92182420691300C9C5DA /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		3AFB921A2420735900C9C5DA /* Bearer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bearer.swift; sourceTree = "<group>"; };
 		CEB8F70B236B8D3600455692 /* AnimalDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnimalDetailViewController.swift; sourceTree = "<group>"; };
@@ -48,8 +50,9 @@
 		3AFB92172420690300C9C5DA /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				3AFB92182420691300C9C5DA /* User.swift */,
+				3AE8B5772423143C00E61F30 /* Animal.swift */,
 				3AFB921A2420735900C9C5DA /* Bearer.swift */,
+				3AFB92182420691300C9C5DA /* User.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -87,8 +90,8 @@
 		CEDCA59722669673009EA535 /* Application */ = {
 			isa = PBXGroup;
 			children = (
-				CEDCA57A22668AB2009EA535 /* AppDelegate.swift */,
 				CEDCA599226697BD009EA535 /* APIController.swift */,
+				CEDCA57A22668AB2009EA535 /* AppDelegate.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -96,9 +99,9 @@
 		CEDCA5982266967E009EA535 /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CEB8F70B236B8D3600455692 /* AnimalDetailViewController.swift */,
 				CEDCA58E22668BCF009EA535 /* AnimalsTableViewController.swift */,
 				CEDCA59022668D0F009EA535 /* LoginViewController.swift */,
-				CEB8F70B236B8D3600455692 /* AnimalDetailViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -175,6 +178,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEB8F70C236B8D3600455692 /* AnimalDetailViewController.swift in Sources */,
+				3AE8B5782423143C00E61F30 /* Animal.swift in Sources */,
 				CEDCA59A226697BD009EA535 /* APIController.swift in Sources */,
 				3AFB92192420691300C9C5DA /* User.swift in Sources */,
 				3AFB921B2420735900C9C5DA /* Bearer.swift in Sources */,

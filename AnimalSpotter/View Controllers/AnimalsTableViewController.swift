@@ -80,9 +80,16 @@ class AnimalsTableViewController: UITableViewController {
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "LoginViewModalSegue", let loginVC = segue.destination as? LoginViewController {
+        if segue.identifier == "LoginViewModalSegue",
+            let loginVC = segue.destination as? LoginViewController {
             //dependency injection
             loginVC.apiController = apiController
+            
+        } else if segue.identifier == "ShowAnimalDetailSegue",
+            let detailVC = segue.destination as? AnimalDetailViewController,
+            let selectedIndexPath = tableView.indexPathForSelectedRow {
+            detailVC.apiController = apiController
+            detailVC.animalName = animalNames[selectedIndexPath.row]
         }
     }
 }

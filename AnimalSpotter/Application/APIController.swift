@@ -166,6 +166,74 @@ class APIController {
         }.resume()
     }
     
+    // Fetch the detailed animal info 
+    func fetchDetails(for animalName: String, completion: @escaping (Result<Animal, NetworkError>) -> Void) {
+        
+        // Make sure there is a token
+        guard let bearer = bearer else {
+            completion(.failure(.noAuth))
+            return
+        }
+        
+        let animalURL = baseURL.appendingPathComponent("animals/\(animalName)")
+        
+        // Build the request
+        var request = URLRequest(url: animalURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        request.addValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let response = response as? HTTPURLResponse,
+                response.statusCode == 401 {
+                completion(.failure(.unauthorized))
+                return
+            }
+            
+            guard error == nil else {
+                completion(.failure(.otherEror(error!)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            //Decode the data
+            let decoder = JSONDecoder()
+            do {
+                let animal = try decoder.decode(Animal.self, from: data)
+                completion(.success(animal))
+            } catch {
+                completion(.failure(.decodeFailed))
+            }
+        }.resume()
+    }
+    
     // create function to fetch image
+    func fetchImage(at urlString: String, completion: @escaping (Result<UIImage, NetworkError>) -> Void) {
+        
+        //NO - NO
+        let imageURL = URL(string: urlString)!
+        
+        var request = URLRequest(url: imageURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            guard error == nil else {
+                completion(.failure(.otherEror(error!)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            //NO - NO
+            let image = UIImage(data: data)!
+            completion(.success(image))
+        }.resume()
+    }
     
 }
