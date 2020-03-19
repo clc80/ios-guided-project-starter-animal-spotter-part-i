@@ -54,7 +54,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
                     return
                 }
                 DispatchQueue.main.async {
-                    let alertController = UIAlertController(title: "Sigun Up Successful", message: "Now please log in.", preferredStyle: .alert)
+                    let alertController = UIAlertController(title: "Sign Up Successful", message: "Now please log in.", preferredStyle: .alert)
                     let alertAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                     alertController.addAction(alertAction)
                     

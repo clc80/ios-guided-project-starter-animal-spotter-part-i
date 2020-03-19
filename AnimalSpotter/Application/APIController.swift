@@ -14,6 +14,14 @@ enum HTTPMethod: String {
     case post = "POST"
 }
 
+enum NetworkError: Error {
+    case noAuth
+    case unauthorized
+    case otherEror(Error)
+    case noData
+    case decodeFailed
+}
+
 class APIController {
     // MARK: - Public Properties
     var bearer: Bearer?
@@ -115,6 +123,49 @@ class APIController {
     }
     
     // create function for fetching all animal names
+    func fetchAllAnimalNames(completion: @escaping (Result<[String], NetworkError>) -> Void) {
+        
+        // Make sure there is a token
+        guard let bearer = bearer else {
+            completion(.failure(.noAuth))
+            return
+        }
+        
+        let allAnimalsURL = baseURL.appendingPathComponent("animals/all")
+        
+        // Build the request
+        var request = URLRequest(url: allAnimalsURL)
+        request.httpMethod = HTTPMethod.get.rawValue
+        request.addValue("Bearer \(bearer.token)", forHTTPHeaderField: "Authorization")
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
+            if let response = response as? HTTPURLResponse,
+                response.statusCode == 401 {
+                completion(.failure(.unauthorized))
+                return
+            }
+            
+            guard error == nil else {
+                completion(.failure(.otherEror(error!)))
+                return
+            }
+            
+            guard let data = data else {
+                completion(.failure(.noData))
+                return
+            }
+            
+            //Decode the data
+            let decoder = JSONDecoder()
+            do {
+                let animalNames = try decoder.decode([String].self, from: data)
+                completion(.success(animalNames))
+            } catch {
+                completion(.failure(.decodeFailed))
+            }
+        }.resume()
+    }
     
     // create function to fetch image
+    
 }
